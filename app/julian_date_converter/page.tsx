@@ -1,16 +1,16 @@
-import React from "react";
 import type { Metadata } from "next";
-import styles from "./converter.module.css";
+import React from "react";
 import JulianConverter from "./converter";
+import styles from "./converter.module.css";
 //
 export const metadata: Metadata = {
-  title: "Julian Date Converter",
+	title: "Julian Date Converter",
 };
 
 export default function Converter() {
-  return (
-    <section className={styles.condev}>
-      <JulianConverter />
-    </section>
-  );
+	return (
+		<section className={styles.condev}>
+			<JulianConverter />
+		</section>
+	);
 }

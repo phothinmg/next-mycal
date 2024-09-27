@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { dateTimeToJulian } from "../mm/gre";
-import type { CalendarTypes } from "../mm/gre";
+import {
+  dateTimeToJulian,
+  type CalendarTypes,
+  julianToDateTime,
+} from "./index";
 import styles from "./converter.module.css";
-import { julianToDateTime } from "../mm/julian";
 
 //
 export default function JulianConverter() {
@@ -40,10 +42,7 @@ export default function JulianConverter() {
   //
   const [jdd, setJdValue] = useState<number>(jd);
   //
-  const dts = julianToDateTime({
-    jd: jdd,
-    ct: ct2 as CalendarTypes,
-  });
+  const dts = julianToDateTime(jdd, ct2 as CalendarTypes);
   return (
     <section className={styles.condev}>
       <div className={styles.converter}>
@@ -211,7 +210,7 @@ export default function JulianConverter() {
         <hr />
         <small>Date Time at UTC</small>
         <p id="utc" suppressHydrationWarning={true}>
-          {dts.utcDateTime}
+          {dts}
         </p>
         <hr />
       </div>

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check": "biome check --write app/mm"
+    "check": "biome check --write app"
   },
   "dependencies": {
     "jsx-social-icons": "^1.0.10",

@@ -1,10 +1,11 @@
 .hmdev {
-  padding: 18px;
+	padding: 18px;
 }
 .home {
-  margin: auto;
-  width: 50%;
+	margin: auto;
+	width: 50%;
+	display: table;
 }
 .lnk {
-  text-decoration: none;
+	text-decoration: none;
 }
