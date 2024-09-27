@@ -1,6 +1,5 @@
 import { utils } from "./helper/utils";
 import type { TimeZones } from "./timezone";
-import { get_offset } from "./timezones/mod";
 import { TimeZ } from "./timezone";
 //
 export type CalendarTypes = "British" | "Gregorian" | "Julian";

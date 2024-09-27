@@ -1,7 +1,6 @@
 import { utils } from "./helper/utils";
 import type { TimeZones } from "./timezone";
 import { TimeZ } from "./timezone";
-import { get_offset } from "./timezones/mod";
 import type { CalendarTypes } from "./gre";
 import { dateTimeToJulian } from "./gre";
 import type { GTJOptions } from "./gre";
