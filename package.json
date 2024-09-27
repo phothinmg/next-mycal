@@ -10,6 +10,7 @@
     "check": "biome check --write app/mm"
   },
   "dependencies": {
+    "jsx-social-icons": "^1.0.10",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18"
@@ -20,6 +21,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "dax-sh": "^0.42.0",
+    "lightningcss": "^1.27.0",
     "tsx": "^4.19.1",
     "typescript": "^5"
   }
