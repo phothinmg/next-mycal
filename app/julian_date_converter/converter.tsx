@@ -5,8 +5,6 @@ import { dateTimeToJulian } from "../mm/gre";
 import type { CalendarTypes } from "../mm/gre";
 import styles from "./converter.module.css";
 import { julianToDateTime } from "../mm/julian";
-import { TimeZones } from "../mm/timezone";
-import { timeZones } from "../mm/timezone";
 
 //
 export default function JulianConverter() {
@@ -19,7 +17,6 @@ export default function JulianConverter() {
   const utcSecond: number = dt.getUTCSeconds();
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
   const [ct2, setCt2Value] = useState<CalendarTypes | string>("Gregorian");
-  const [tz, setTzValue] = useState<TimeZones | string>("UTC+00:00");
   const [year, setYearValue] = useState<number>(utcYear);
   const [month, setMonthValue] = useState<number>(utcMonth);
   const [date, setDateValue] = useState<number>(utcdate);
@@ -46,7 +43,6 @@ export default function JulianConverter() {
   const dts = julianToDateTime({
     jd: jdd,
     ct: ct2 as CalendarTypes,
-    tz: tz as TimeZones,
   });
   return (
     <section className={styles.condev}>
@@ -217,30 +213,7 @@ export default function JulianConverter() {
         <p id="utc" suppressHydrationWarning={true}>
           {dts.utcDateTime}
         </p>
-        <small>Date Time at Local</small>
-        <p id="local" suppressHydrationWarning={true}>
-          {dts.localDateTime}
-        </p>
         <hr />
-        <small>Select Timezone</small>
-        <br />
-        <select
-          name="tz"
-          id="tz"
-          value={tz}
-          onChange={(e) => setTzValue(e.target.value)}
-        >
-          {timeZones.map((i) => (
-            <option key={i} value={i}>
-              {i}
-            </option>
-          ))}
-        </select>
-        <br />
-        <small>Date Time at selected Timezone</small>
-        <p id="custom" suppressHydrationWarning={true}>
-          {dts.customDateTime}
-        </p>
       </div>
     </section>
   );
