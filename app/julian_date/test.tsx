@@ -68,11 +68,3 @@ const JulianDateTime: React.FC = () => {
   );
 };
 export default JulianDateTime;
-
-// export async function getServerSideProps() {
-//   return {
-//     props: {
-//       serverTime: new Date().toISOString(), // Get the server time in ISO format
-//     },
-//   };
-// }
