@@ -288,7 +288,22 @@ function ctc({
   const jdd: number = jd - d;
   return j2d(jdd);
 }
+
 export function julianToDateTime(jd: number, ct: CalendarTypes): string {
+  const ma: string[] = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   // ----------------------------UTC---------------------------//
   const g = j2d(jd);
   const g2 = ctc({
@@ -300,22 +315,11 @@ export function julianToDateTime(jd: number, ct: CalendarTypes): string {
     second: g.second,
   });
   const g3 = ct === "Julian" || (ct === "British" && jd < 2361222) ? g2 : g;
-  const utcDateTime = new Date(
-    g3.year,
-    g3.month - 1,
-    g3.day,
-    g3.hour,
-    g3.minute,
-    g3.second
-  ).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h24",
-    weekday: "short",
-  });
-  return utcDateTime;
+  const mo = ma[g3.month - 1];
+  const h = g3.hour.toString().length === 1 ? `0${g3.hour}` : `${g3.hour}`;
+  const mi =
+    g3.minute.toString().length === 1 ? `0${g3.minute}` : `${g3.minute}`;
+  const s =
+    g3.second.toString().length === 1 ? `0${g3.second}` : `${g3.second}`;
+  return `${mo} ${g3.day} , ${g3.year} , ${h}:${mi}:${s}`;
 }

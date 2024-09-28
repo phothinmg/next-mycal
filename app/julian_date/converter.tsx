@@ -158,25 +158,14 @@ export default function JulianConverter() {
       to the element.
        */}
         <small>Julian Date (jd)</small>
-        <input
-          className={styles.jd}
-          name="jd"
-          id="jd"
-          value={jd}
-          readOnly={true}
-        />
-        <br />
+        <p id="jd" suppressHydrationWarning={true}>
+          {jd}
+        </p>
         <small>Julian Day Number (jdn)</small>
-        <input
-          className={styles.jd}
-          name="jdn"
-          id="jdn"
-          value={jdn}
-          readOnly={true}
-        />
+        <p id="jdn" suppressHydrationWarning={true}>
+          {jdn}
+        </p>
         <hr />
-        <br />
-        <br />
       </div>
       <Jd2Dt />
     </section>

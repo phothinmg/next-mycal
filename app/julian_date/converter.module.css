@@ -40,10 +40,10 @@
 	margin-left: 18px;
 	font-family: monospace;
 	font-weight: bold;
-	font-size: large;
+	font-size: medium;
 	padding: 7px;
 	width: 180px;
-	border-radius: 7px;
+	border-bottom: 1px solid;
 }
 .converter .notice {
 	font-style: italic;
