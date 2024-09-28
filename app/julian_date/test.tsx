@@ -18,9 +18,8 @@ const JulianDateTime: React.FC = () => {
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
 
   const [jd, setJdValue] = useState<number>(jdnow());
-  const [dts, setDtsValue] = useState<string>(
-    julianToDateTime(jd, ct as CalendarTypes)
-  );
+  const dtsnow = julianToDateTime(jd, ct as CalendarTypes);
+  const [dts, setDtsValue] = useState<string>(dtsnow);
   // handle jd change
   const handleJdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newJd = Number(e.target.value);
