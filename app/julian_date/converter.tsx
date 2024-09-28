@@ -1,13 +1,9 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import {
-  dateTimeToJulian,
-  type CalendarTypes,
-  julianToDateTime,
-} from "./index";
+import { dateTimeToJulian, type CalendarTypes } from "./index";
 import styles from "./converter.module.css";
-
+import Jd2Dt from "./JdToDt";
 //
 export default function JulianConverter() {
   const dt: Date = new Date();
@@ -18,7 +14,6 @@ export default function JulianConverter() {
   const utcMinute: number = dt.getUTCMinutes();
   const utcSecond: number = dt.getUTCSeconds();
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
-  const [ct2, setCt2Value] = useState<CalendarTypes | string>("Gregorian");
   const [year, setYearValue] = useState<number>(utcYear);
   const [month, setMonthValue] = useState<number>(utcMonth);
   const [date, setDateValue] = useState<number>(utcdate);
@@ -40,9 +35,7 @@ export default function JulianConverter() {
   const jd: number = julian.jd;
   const jdn: number = julian.jdn;
   //
-  const [jdd, setJdValue] = useState<number>(jd);
-  //
-  const dts = julianToDateTime(jdd, ct2 as CalendarTypes);
+
   return (
     <section className={styles.condev}>
       <div className={styles.converter}>
@@ -184,36 +177,8 @@ export default function JulianConverter() {
         <hr />
         <br />
         <br />
-        <h3>2. Julian Date to Date Time Converter</h3>
-        <hr />
-        <small>Select calendar type </small>
-        <br />
-        <select
-          name="ct2"
-          id="ct2"
-          value={ct2}
-          onChange={(e) => setCt2Value(e.target.value)}
-        >
-          <option value="Gregorian">Gregorian</option>
-          <option value="Julian">Julian</option>
-          <option value="British">British</option>
-        </select>
-        <hr />
-        <small>Enter Julian Date</small>
-        <input
-          className={styles.jd}
-          name="jdd"
-          id="jdd"
-          value={jdd}
-          onChange={(e) => setJdValue(Number(e.target.value))}
-        />
-        <hr />
-        <small>Date Time at UTC</small>
-        <p id="utc" suppressHydrationWarning={true}>
-          {dts}
-        </p>
-        <hr />
       </div>
+      <Jd2Dt />
     </section>
   );
 }

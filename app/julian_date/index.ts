@@ -316,7 +316,6 @@ export function julianToDateTime(jd: number, ct: CalendarTypes): string {
     second: "2-digit",
     hourCycle: "h24",
     weekday: "short",
-    timeZone: "GMT",
   });
   return utcDateTime;
 }
