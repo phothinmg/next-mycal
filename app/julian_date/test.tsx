@@ -8,48 +8,16 @@ import {
 } from "./index";
 import styles from "./converter.module.css";
 
-interface JulianProps {
-  serverTime: string;
+function jdnow() {
+  const ut = new Date().getTime() / 1000;
+  //   const utcSe = Date.parse(utcStr) / 1000;
+  const jd = 2440587.5 + ut / 86400.0;
+  return jd;
 }
-const getUTC = (t: number) => {
-  const dt: Date = new Date(t);
-  const y: number = dt.getUTCFullYear();
-  const mo: number = dt.getUTCMonth();
-  const d: number = dt.getUTCDate();
-  const hr: number = dt.getUTCHours();
-  const mi: number = dt.getUTCMinutes();
-  const s: number = dt.getUTCSeconds();
-  return {
-    y,
-    mo,
-    d,
-    hr,
-    mi,
-    s,
-  };
-};
-const dt2jd = (t: number, ct: CalendarTypes): number => {
-  const dt = getUTC(t);
-  const julian = dateTimeToJulian({
-    year: dt.y,
-    month: dt.mo + 1,
-    day: dt.d,
-    hour: dt.hr,
-    minute: dt.mi,
-    second: dt.s,
-    calendarType: ct,
-  });
-  return julian.jd;
-};
-
-const JulianDateTime: React.FC<JulianProps> = ({ serverTime }) => {
+const JulianDateTime: React.FC = () => {
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
-  // get server time
-  const [st, setStvalue] = useState<number>(new Date(serverTime).getTime());
-  useEffect(() => {
-    setStvalue(st);
-  }, [serverTime]);
-  const [jd, setJdValue] = useState<number>(dt2jd(st, ct as CalendarTypes));
+
+  const [jd, setJdValue] = useState<number>(jdnow());
   const [dts, setDtsValue] = useState<string>(
     julianToDateTime(jd, ct as CalendarTypes)
   );

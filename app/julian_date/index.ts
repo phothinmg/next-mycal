@@ -306,14 +306,7 @@ export function julianToDateTime(jd: number, ct: CalendarTypes): string {
   ];
   // ----------------------------UTC---------------------------//
   const g = j2d(jd);
-  const g2 = ctc({
-    year: g.year,
-    month: g.month,
-    day: g.day,
-    hour: g.hour,
-    minute: g.minute,
-    second: g.second,
-  });
+  const g2 = j2d(jd - secularDiff(g.year));
   const g3 = ct === "Julian" || (ct === "British" && jd < 2361222) ? g2 : g;
   const mo = ma[g3.month - 1];
   const h = g3.hour.toString().length === 1 ? `0${g3.hour}` : `${g3.hour}`;

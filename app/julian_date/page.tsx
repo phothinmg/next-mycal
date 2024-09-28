@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const Converter: React.FC = () => {
   return (
     <section className={styles.condev}>
-      <JulianDateTime serverTime={serverTime} />
+      <JulianDateTime />
     </section>
   );
 };
