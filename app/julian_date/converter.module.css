@@ -1,51 +1,52 @@
 .condev {
-	padding: 30px;
+  padding: 30px;
 }
 .converter {
-	margin-left: auto;
-	margin-right: auto;
-	display: table;
-	padding: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  padding: 18px;
 }
 .converter label {
-	margin-right: 18px;
+  margin-right: 18px;
 }
 .converter select {
-	padding: 10px;
-	border: none;
-	background-color: inherit;
-	font-size: 15px;
-	font-family: inherit;
-	font-weight: 500;
-	font-style: normal;
+  padding: 10px;
+  border: none;
+  background-color: inherit;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  font-style: normal;
 }
 .tinput {
-	border: none;
-	margin-left: 18px;
-	border-bottom: 0.5px solid;
-	width: 72px;
-	font-family: monospace;
-	font-weight: bold;
+  border: none;
+  margin-left: 18px;
+  border-bottom: 0.5px solid;
+  width: 72px;
+  font-family: monospace;
+  font-weight: bold;
 }
 .converter p {
-	font-family: monospace;
-	font-weight: bold;
-	font-size: large;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: large;
 }
 .converter small {
-	color: rgb(221, 76, 19);
+  color: rgb(221, 76, 19);
+  font-size: medium;
 }
 .converter .jd {
-	border: none;
-	margin-left: 18px;
-	font-family: monospace;
-	font-weight: bold;
-	font-size: medium;
-	padding: 7px;
-	width: 180px;
-	border-bottom: 1px solid;
+  border: none;
+  margin-left: 18px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 7px;
+  width: 180px;
+  border-bottom: 1px solid;
 }
 .converter .notice {
-	font-style: italic;
-	font-family: monospace;
+  font-style: italic;
+  font-family: monospace;
 }
