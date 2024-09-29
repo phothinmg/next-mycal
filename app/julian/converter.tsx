@@ -1,25 +1,15 @@
 "use client";
 import React from "react";
-import { useState, useEffect } from "react";
-import {
-  dateTimeToJulian,
-  type CalendarTypes,
-  julianToDateTime,
-} from "./index";
-import styles from "./converter.module.css";
+import { useState } from "react";
+import { type CalendarTypes, julianToDateTime, jdnow } from "../index";
+//
 
-function jdnow() {
-  const ut = new Date().getTime() / 1000;
-  //   const utcSe = Date.parse(utcStr) / 1000;
-  const jd = 2440587.5 + ut / 86400.0;
-  return jd;
-}
-const JulianDateTime: React.FC = () => {
+const JulianDateConverter: React.FC = () => {
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
   const [jd, setJdValue] = useState<number>(jdnow());
   const dts = julianToDateTime(jd, ct as CalendarTypes);
   return (
-    <div className={styles.converter}>
+    <div className={"converter"}>
       <small>Select calendar type </small>
       <br />
       <select
@@ -38,7 +28,7 @@ const JulianDateTime: React.FC = () => {
       <hr />
       <small>Enter Julian Date</small>
       <input
-        className={styles.jd}
+        className={"jd"}
         name="jd"
         id="jd"
         value={jd}
@@ -51,4 +41,4 @@ const JulianDateTime: React.FC = () => {
     </div>
   );
 };
-export default JulianDateTime;
+export default JulianDateConverter;

@@ -1,22 +1,81 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap");
 :root {
-  --background: #ffffff;
-  --foreground: #494545;
+  --bg: #ffffff;
+  --text: #494545;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #0a0a0a;
+    --text: #ededed;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--text);
+  background: var(--bg);
   font-family: "Ubuntu Sans Mono", monospace;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
+}
+/* section wrapper */
+section {
+  padding: 18px;
+}
+/* nav div */
+.nav {
+  display: flex;
+  flex-direction: row;
+  padding: 7px;
+}
+.nav .link {
+  text-decoration: none;
+  font-size: small;
+}
+/* Converter */
+.converter {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+  padding: 18px;
+}
+.converter label {
+  margin-right: 18px;
+}
+.converter select {
+  padding: 10px;
+  border: none;
+  background-color: inherit;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 500;
+  font-style: normal;
+}
+.tinput {
+  border: none;
+  margin-left: 18px;
+  border-bottom: 0.5px solid;
+  width: 72px;
+  font-family: monospace;
+  font-weight: bold;
+}
+.converter p {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: large;
+}
+.converter small {
+  color: rgb(221, 76, 19);
+  font-size: medium;
+}
+.converter .jd {
+  border: none;
+  margin-left: 18px;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 7px;
+  width: 180px;
+  border-bottom: 1px solid;
 }
