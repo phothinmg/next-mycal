@@ -87,3 +87,46 @@ export function julianToDateTime(jd: number, ct: CalendarTypes): string {
     g3.second.toString().length === 1 ? `0${g3.second}` : `${g3.second}`;
   return `${mo} ${g3.day} , ${g3.year} , ${h}:${mi}:${s}`;
 }
+export function dt2j(
+  year: number,
+  month: number,
+  day: number,
+  hour: number,
+  minute: number,
+  second: number,
+  ct: CalendarTypes
+): { jd: number; jdn: number } {
+  // setting default values
+  const h: number = hour ?? 12;
+  const m: number = minute ?? 0;
+  const s: number = second ?? 0;
+  const ctt: CalendarTypes = ct ?? "Gregorian";
+  const d: number = secularDiff(year);
+  // To decimal fraction of the day
+  // h , m , s
+  const df: number = (h - 12) / 24 + m / 1440 + s / 86400;
+  // pre jdn
+  const a: number = Math.floor((month - 3) / 12);
+  const x4: number = year + a;
+  const x3: number = Math.floor(x4 / 100);
+  const x2: number = x4 % 100;
+  const x1: number = month - 12 * a - 3;
+  const _jdn: number =
+    Math.floor((146097 * x3) / 4) +
+    Math.floor((36525 * x2) / 100) +
+    Math.floor((153 * x1 + 2) / 5) +
+    day +
+    1721119;
+  // pre jd with decimal fraction of h,m,s and local tz offset, given tz offset
+  const _jd: number = _jdn + df;
+  // check calendar type and if pre jd lass than 2361222 + secular difference
+  // Gregorian date 1752-Sep-14 JDN = 2361222
+  const jd: number =
+    ctt === "Julian" || (ctt === "British" && _jd < 2361222) ? _jd + d : _jd;
+  // make sure jdn with tz and calendar type
+  const jdn: number = Math.round(jd);
+  return {
+    jd,
+    jdn,
+  };
+}

@@ -2,12 +2,14 @@
 :root {
   --bg: #ffffff;
   --text: #494545;
+  --text2: rgb(221, 76, 19);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0a0a0a;
     --text: #ededed;
+    --text2: gold;
   }
 }
 
@@ -32,6 +34,14 @@ section {
 .nav .link {
   text-decoration: none;
   font-size: small;
+  margin-right: 10px;
+}
+/* content body */
+.content {
+  margin: auto;
+  width: auto;
+  display: table;
+  padding: 27px;
 }
 /* Converter */
 .converter {
@@ -66,7 +76,7 @@ section {
   font-size: large;
 }
 .converter small {
-  color: rgb(221, 76, 19);
+  color: var(--text2);
   font-size: medium;
 }
 .converter .jd {
@@ -78,4 +88,19 @@ section {
   padding: 7px;
   width: 180px;
   border-bottom: 1px solid;
+}
+p.content {
+  padding: 10px;
+  width: 95%;
+  margin: 10px auto;
+  text-align: justify;
+  font-size: medium;
+  text-justify: auto;
+}
+
+/* media q */
+@media (max-width: 1000px) {
+  .content {
+    padding: auto;
+  }
 }

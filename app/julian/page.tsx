@@ -8,11 +8,11 @@ export const metadata: Metadata = {
   title: "Julian Date Converter",
 };
 
-const Converter: React.FC = () => {
+const JConverter: React.FC = () => {
   return (
     <section>
       <JulianNoSSR />
     </section>
   );
 };
-export default Converter;
+export default JConverter;
