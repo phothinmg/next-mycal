@@ -16,31 +16,18 @@ function jdnow() {
 }
 const JulianDateTime: React.FC = () => {
   const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
-
   const [jd, setJdValue] = useState<number>(jdnow());
-  const dtsnow = julianToDateTime(jd, ct as CalendarTypes);
-  const [dts, setDtsValue] = useState<string>(dtsnow);
-  // handle jd change
-  const handleJdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newJd = Number(e.target.value);
-    setJdValue(newJd);
-    const dts = julianToDateTime(newJd, ct as CalendarTypes);
-    setDtsValue(dts);
-  };
-  const handleCalendarTypeChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const newCt = e.target.value;
-    setCtValue(newCt);
-
-    const dts = julianToDateTime(jd, newCt as CalendarTypes);
-    setDtsValue(dts);
-  };
+  const dts = julianToDateTime(jd, ct as CalendarTypes);
   return (
     <div className={styles.converter}>
       <small>Select calendar type </small>
       <br />
-      <select name="ct" id="ct" value={ct} onChange={handleCalendarTypeChange}>
+      <select
+        name="ct"
+        id="ct"
+        value={ct}
+        onChange={(e) => setCtValue(e.target.value)}
+      >
         <option value="Gregorian">Gregorian</option>
         <option value="Julian">Julian</option>
         <option value="British">British</option>
@@ -55,13 +42,11 @@ const JulianDateTime: React.FC = () => {
         name="jd"
         id="jd"
         value={jd}
-        onChange={handleJdChange}
+        onChange={(e) => setJdValue(Number(e.target.value))}
       />
       <hr />
       <small>Date Time at UTC</small>
-      <p id="utc" suppressHydrationWarning={true}>
-        {dts}
-      </p>
+      <p id="dts">{dts}</p>
       <hr />
     </div>
   );
