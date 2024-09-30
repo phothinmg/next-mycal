@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { type CalendarTypes, j2d, jdnow, dt2j } from "../index";
+import { type CalendarTypes, j2d, jdnow, dt2j } from "../../index";
 
 //
 export default function JulianConverter() {
@@ -23,7 +23,7 @@ export default function JulianConverter() {
   //
 
   return (
-    <div className={"converter"}>
+    <div>
       <h3>Date Time To Julian Date Converter</h3>
       <hr />
       <small>Select calendar type </small>
@@ -47,7 +47,6 @@ export default function JulianConverter() {
             <td>Year</td>
             <td>
               <input
-                className={"tinput"}
                 min={-3000}
                 max={3000}
                 type="number"
@@ -62,7 +61,6 @@ export default function JulianConverter() {
             <td>Month</td>
             <td>
               <input
-                className={"tinput"}
                 min={1}
                 max={12}
                 type="number"
@@ -77,7 +75,6 @@ export default function JulianConverter() {
             <td>Date</td>
             <td>
               <input
-                className={"tinput"}
                 min={1}
                 max={31}
                 type="number"
@@ -92,7 +89,6 @@ export default function JulianConverter() {
             <td>Hour</td>
             <td>
               <input
-                className={"tinput"}
                 min={0}
                 max={23}
                 type="number"
@@ -107,7 +103,6 @@ export default function JulianConverter() {
             <td>Minute</td>
             <td>
               <input
-                className={"tinput"}
                 min={0}
                 max={59}
                 type="number"
@@ -122,7 +117,6 @@ export default function JulianConverter() {
             <td>Second</td>
             <td>
               <input
-                className={"tinput"}
                 min={0}
                 max={59}
                 type="number"

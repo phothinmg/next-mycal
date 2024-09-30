@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import React from "react";
-import dynamic from "next/dynamic";
-const JulianNoSSR = dynamic(() => import("./converter"), { ssr: false });
+import React, { memo } from "react";
+import NavBar from "../components/nav";
+import PostComponent from "../components/post-component/posts";
+
 //
 
 export const metadata: Metadata = {
-  title: "Julian Date Converter",
+  title: "Gregorian",
 };
 
-const JConverter: React.FC = () => {
+const Julian: React.FC = memo(function Julian() {
   return (
     <section>
-      <JulianNoSSR />
+      <NavBar />
+      <PostComponent filePath="julian.md" />
     </section>
   );
-};
-export default JConverter;
+});
+
+export default Julian;

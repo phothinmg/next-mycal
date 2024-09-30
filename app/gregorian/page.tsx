@@ -1,18 +1,21 @@
 import type { Metadata } from "next";
-import React from "react";
-import dynamic from "next/dynamic";
-const GregorianNoSSR = dynamic(() => import("./converter"), { ssr: false });
+import React, { memo } from "react";
+import NavBar from "../components/nav";
+import PostComponent from "../components/post-component/posts";
+
 //
 
 export const metadata: Metadata = {
   title: "Gregorian",
 };
 
-const GConverter: React.FC = () => {
+const Gregorian: React.FC = memo(function Gregorian() {
   return (
     <section>
-      <GregorianNoSSR />
+      <NavBar />
+      <PostComponent filePath="gregorian.md" />
     </section>
   );
-};
-export default GConverter;
+});
+
+export default Gregorian;

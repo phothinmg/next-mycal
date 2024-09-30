@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { type CalendarTypes, julianToDateTime, jdnow } from "../index";
+import { type CalendarTypes, julianToDateTime, jdnow } from "../../index";
 //
 
 const JulianDateConverter: React.FC = () => {
@@ -9,7 +9,7 @@ const JulianDateConverter: React.FC = () => {
   const [jd, setJdValue] = useState<number>(jdnow());
   const dts = julianToDateTime(jd, ct as CalendarTypes);
   return (
-    <div className={"converter"}>
+    <div>
       <small>Select calendar type </small>
       <br />
       <select
@@ -28,7 +28,6 @@ const JulianDateConverter: React.FC = () => {
       <hr />
       <small>Enter Julian Date</small>
       <input
-        className={"jd"}
         name="jd"
         id="jd"
         value={jd}

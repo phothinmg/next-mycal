@@ -8,19 +8,19 @@ const NavBar = memo(function NavBar() {
         <ul>
           <li style={{ fontSize: "18px" }}>
             <Link href={"/"} className="nav-link">
-              MyCal
+              Project MyCal
             </Link>
           </li>
           <li className="float-right">
             <a href="#" data-theme-toggle style={{ fontSize: 18 }}></a>
           </li>
           <li className="float-right">
-            <Link href={"/julian"} target="_blank" className={"nav-link"}>
+            <Link href={"/julian"} className={"nav-link"}>
               Julian
             </Link>
           </li>
           <li className="float-right">
-            <Link href={"/gregorian"} target="_blank" className={"nav-link"}>
+            <Link href={"/gregorian"} className={"nav-link"}>
               Gregorian
             </Link>
           </li>
