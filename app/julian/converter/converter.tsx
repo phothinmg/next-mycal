@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import type React from "react";
 import { useState } from "react";
-import { type CalendarTypes, julianToDateTime, jdnow } from "../../index";
+import { type CalendarTypes, jdnow, julianToDateTime } from "../../index";
+import Link from "next/link";
 //
 
 const JulianDateConverter: React.FC = () => {
@@ -37,6 +38,7 @@ const JulianDateConverter: React.FC = () => {
       <small>Date Time at UTC</small>
       <p id="dts">{dts}</p>
       <hr />
+      <Link href={"/"}>Back to Home</Link>
     </div>
   );
 };

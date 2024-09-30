@@ -1,3 +1,1 @@
-# MyCal
-
-မြန်မာပြက္ခဒိန်တွက်ချက်မှုဆိုင်ရာများလေ့လာရန်ရည်ရွယ်ပါသည်။
+### The study of Burmese Calendar calculation

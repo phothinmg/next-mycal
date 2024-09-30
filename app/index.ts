@@ -1,12 +1,11 @@
-// functions and for web app
-// types def
+// -------------------- types ----------------------------
 export type CalendarTypes = "British" | "Gregorian" | "Julian";
 
-// functions
+// -------------------------------------- Helper ------------------------------------
 export function secularDiff(year: number): number {
   return Math.floor(year / 100) - Math.floor(year / 400) - 2;
 }
-
+// -------------------- Julian to Date Time ---------------------------------------------
 export function j2d(jd: number): {
   year: number;
   month: number;
@@ -87,6 +86,7 @@ export function julianToDateTime(jd: number, ct: CalendarTypes): string {
     g3.second.toString().length === 1 ? `0${g3.second}` : `${g3.second}`;
   return `${mo} ${g3.day} , ${g3.year} , ${h}:${mi}:${s}`;
 }
+// --------------------------------------------- Date Time to Julian--------------------------------------------
 export function dt2j(
   year: number,
   month: number,
@@ -130,3 +130,260 @@ export function dt2j(
     jdn,
   };
 }
+// ------------------------------------------------ Moon Phases ------------------------------------------------------------ //
+function julian2dt(jd: number, ct: CalendarTypes) {
+  const ma: string[] = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  // ----------------------------UTC---------------------------//
+  const g = j2d(jd);
+  const g2 = j2d(jd - secularDiff(g.year));
+  const g3 = ct === "Julian" || (ct === "British" && jd < 2361222) ? g2 : g;
+  const mo = ma[g3.month - 1];
+  const dstr = g3.day.toString().length === 1 ? `0${g3.day}` : `${g3.day}`;
+  const h = g3.hour.toString().length === 1 ? `0${g3.hour}` : `${g3.hour}`;
+  const mi =
+    g3.minute.toString().length === 1 ? `0${g3.minute}` : `${g3.minute}`;
+  const s =
+    g3.second.toString().length === 1 ? `0${g3.second}` : `${g3.second}`;
+  const dateStr = `${g3.year} ${mo} ${dstr} ${h}:${mi}:${s}`;
+  return {
+    yr: g3.year,
+    mt: g3.month,
+    da: g3.day,
+    min: g3.minute,
+    sec: g3.second,
+    string: dateStr,
+  };
+}
+function mod360(f: number) {
+  let t = f % 360;
+  if (t < 0) t += 360;
+  return t;
+}
+//
+
+function getCycle(year: number, month: number) {
+  const yf = (month * 30 + 15) / 365; //Estimate fraction of year
+  const k = 12.3685 * (year + yf - 2000);
+  return Math.floor(k);
+}
+
+type MoonPhases = 0 | 0.25 | 0.5 | 0.75;
+
+function phaseDate(cycle: number, phase: MoonPhases) {
+  // phase - 0 = new, .25 = first quarter, .5 = full, .75 = last quarter, all other values are invalid
+  //From Meeus ch49
+  const k = cycle + phase;
+
+  const toRad = Math.PI / 180;
+
+  const T = k / 1236.85; //49.3
+  let JDE =
+    2451550.09766 +
+    29.530588861 * k +
+    0.00015437 * T * T -
+    0.00000015 * T * T * T +
+    0.00000000073 * T * T * T * T; //49.1
+
+  const E = 1 - 0.002516 * T - 0.0000074 * T * T; //47.6
+
+  const M =
+    mod360(
+      2.5534 + 29.1053567 * k - 0.0000014 * T * T - 0.00000011 * T * T * T
+    ) * toRad; //49.4
+  const Mp =
+    mod360(
+      201.5643 +
+        385.81693528 * k +
+        0.0107582 * T * T +
+        0.00001238 * T * T * T -
+        0.000000058 * T * T * T * T
+    ) * toRad; //49.5
+  const F =
+    mod360(
+      160.7108 +
+        390.67050284 * k -
+        0.0016118 * T * T -
+        0.00000227 * T * T * T +
+        0.000000011 * T * T * T * T
+    ) * toRad; //49.6
+  const Om =
+    mod360(
+      124.7746 - 1.56375588 * k + 0.0020672 * T * T + 0.00000215 * T * T * T
+    ) * toRad; //49.7
+
+  //P351-352
+  const A1 = mod360(299.77 + 0.107408 * k - 0.009173 * T * T) * toRad;
+  const A2 = mod360(251.88 + 0.016321 * k) * toRad;
+  const A3 = mod360(251.83 + 26.651886 * k) * toRad;
+  const A4 = mod360(349.42 + 36.412478 * k) * toRad;
+  const A5 = mod360(84.66 + 18.206239 * k) * toRad;
+  const A6 = mod360(141.74 + 53.303771 * k) * toRad;
+  const A7 = mod360(207.14 + 2.453732 * k) * toRad;
+  const A8 = mod360(154.84 + 7.30686 * k) * toRad;
+  const A9 = mod360(34.52 + 27.261239 * k) * toRad;
+  const A10 = mod360(207.19 + 0.121824 * k) * toRad;
+  const A11 = mod360(291.34 + 1.844379 * k) * toRad;
+  const A12 = mod360(161.72 + 24.198154 * k) * toRad;
+  const A13 = mod360(239.56 + 25.513099 * k) * toRad;
+  const A14 = mod360(331.55 + 3.592518 * k) * toRad;
+  let correction = 0;
+  if (phase == 0) {
+    correction =
+      0.00002 * Math.sin(4 * Mp) +
+      -0.00002 * Math.sin(3 * Mp + M) +
+      -0.00002 * Math.sin(Mp - M - 2 * F) +
+      0.00003 * Math.sin(Mp - M + 2 * F) +
+      -0.00003 * Math.sin(Mp + M + 2 * F) +
+      0.00003 * Math.sin(2 * Mp + 2 * F) +
+      0.00003 * Math.sin(Mp + M - 2 * F) +
+      0.00004 * Math.sin(3 * M) +
+      0.00004 * Math.sin(2 * Mp - 2 * F) +
+      -0.00007 * Math.sin(Mp + 2 * M) +
+      -0.00017 * Math.sin(Om) +
+      -0.00024 * E * Math.sin(2 * Mp - M) +
+      0.00038 * E * Math.sin(M - 2 * F) +
+      0.00042 * E * Math.sin(M + 2 * F) +
+      -0.00042 * Math.sin(3 * Mp) +
+      0.00056 * E * Math.sin(2 * Mp + M) +
+      -0.00057 * Math.sin(Mp + 2 * F) +
+      -0.00111 * Math.sin(Mp - 2 * F) +
+      0.00208 * E * E * Math.sin(2 * M) +
+      -0.00514 * E * Math.sin(Mp + M) +
+      0.00739 * E * Math.sin(Mp - M) +
+      0.01039 * Math.sin(2 * F) +
+      0.01608 * Math.sin(2 * Mp) +
+      0.17241 * E * Math.sin(M) +
+      -0.4072 * Math.sin(Mp);
+  } else if (phase == 0.25 || phase == 0.75) {
+    correction =
+      -0.00002 * Math.sin(3 * Mp + M) +
+      0.00002 * Math.sin(Mp - M + 2 * F) +
+      0.00002 * Math.sin(2 * Mp - 2 * F) +
+      0.00003 * Math.sin(3 * M) +
+      0.00003 * Math.sin(Mp + M - 2 * F) +
+      0.00004 * Math.sin(Mp - 2 * M) +
+      -0.00004 * Math.sin(Mp + M + 2 * F) +
+      0.00004 * Math.sin(2 * Mp + 2 * F) +
+      -0.00005 * Math.sin(Mp - M - 2 * F) +
+      -0.00017 * Math.sin(Om) +
+      0.00027 * E * Math.sin(2 * Mp + M) +
+      -0.00028 * E * E * Math.sin(Mp + 2 * M) +
+      0.00032 * E * Math.sin(M - 2 * F) +
+      0.00032 * E * Math.sin(M + 2 * F) +
+      -0.00034 * E * Math.sin(2 * Mp - M) +
+      -0.0004 * Math.sin(3 * Mp) +
+      -0.0007 * Math.sin(Mp + 2 * F) +
+      -0.0018 * Math.sin(Mp - 2 * F) +
+      0.00204 * E * E * Math.sin(2 * M) +
+      0.00454 * E * Math.sin(Mp - M) +
+      0.00804 * Math.sin(2 * F) +
+      0.00862 * Math.sin(2 * Mp) +
+      -0.01183 * E * Math.sin(Mp + M) +
+      0.17172 * E * Math.sin(M) +
+      -0.62801 * Math.sin(Mp);
+
+    const W =
+      0.00306 -
+      0.00038 * E * Math.cos(M) +
+      0.00026 * Math.cos(Mp) -
+      0.00002 * Math.cos(Mp - M) +
+      0.00002 * Math.cos(Mp + M) +
+      0.00002 * Math.cos(2 * F);
+    if (phase == 0.25) {
+      correction += W;
+    } else {
+      correction -= W;
+    }
+  } else if (phase == 0.5) {
+    correction =
+      0.00002 * Math.sin(4 * Mp) +
+      -0.00002 * Math.sin(3 * Mp + M) +
+      -0.00002 * Math.sin(Mp - M - 2 * F) +
+      0.00003 * Math.sin(Mp - M + 2 * F) +
+      -0.00003 * Math.sin(Mp + M + 2 * F) +
+      0.00003 * Math.sin(2 * Mp + 2 * F) +
+      0.00003 * Math.sin(Mp + M - 2 * F) +
+      0.00004 * Math.sin(3 * M) +
+      0.00004 * Math.sin(2 * Mp - 2 * F) +
+      -0.00007 * Math.sin(Mp + 2 * M) +
+      -0.00017 * Math.sin(Om) +
+      -0.00024 * E * Math.sin(2 * Mp - M) +
+      0.00038 * E * Math.sin(M - 2 * F) +
+      0.00042 * E * Math.sin(M + 2 * F) +
+      -0.00042 * Math.sin(3 * Mp) +
+      0.00056 * E * Math.sin(2 * Mp + M) +
+      -0.00057 * Math.sin(Mp + 2 * F) +
+      -0.00111 * Math.sin(Mp - 2 * F) +
+      0.00209 * E * E * Math.sin(2 * M) +
+      -0.00514 * E * Math.sin(Mp + M) +
+      0.00734 * E * Math.sin(Mp - M) +
+      0.01043 * Math.sin(2 * F) +
+      0.01614 * Math.sin(2 * Mp) +
+      0.17302 * E * Math.sin(M) +
+      -0.40614 * Math.sin(Mp);
+  }
+
+  JDE += correction;
+
+  //Additional corrections P 252
+  correction =
+    0.000325 * Math.sin(A1) +
+    0.000165 * Math.sin(A2) +
+    0.000164 * Math.sin(A3) +
+    0.000126 * Math.sin(A4) +
+    0.00011 * Math.sin(A5) +
+    0.000062 * Math.sin(A6) +
+    0.00006 * Math.sin(A7) +
+    0.000056 * Math.sin(A8) +
+    0.000047 * Math.sin(A9) +
+    0.000042 * Math.sin(A10) +
+    0.00004 * Math.sin(A11) +
+    0.000037 * Math.sin(A12) +
+    0.000035 * Math.sin(A13) +
+    0.000023 * Math.sin(A14);
+
+  JDE += correction;
+
+  return JDE;
+}
+
+function calMoonPhases(year: number, month: number) {
+  const cy: number = getCycle(year, month);
+  const _n: number = phaseDate(cy, 0);
+  const _fst: number = phaseDate(cy, 0.25);
+  const _ful: number = phaseDate(cy, 0.5);
+  const _lst: number = phaseDate(cy, 0.75);
+  return {
+    new: _n,
+    fq: _fst,
+    full: _ful,
+    lq: _lst,
+  };
+}
+
+export function fullMoonYear(year: number): string[] {
+  const ct: CalendarTypes = "Gregorian";
+  const phases = new Array(12).fill(0).map((_, i) => calMoonPhases(year, i));
+  return phases.map((p) => julian2dt(p.full, ct).string);
+}
+export function newMoonYear(year: number) {
+  const ct: CalendarTypes = "Gregorian";
+  const phases = new Array(12).fill(0).map((_, i) => calMoonPhases(year, i));
+  return phases.map((p) => julian2dt(p.new, ct).string);
+}
+
+// -------------------------------------- Moon Age -------------------------------------//
+
