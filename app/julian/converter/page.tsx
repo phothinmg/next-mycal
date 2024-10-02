@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import type React from "react";
 import { memo } from "react";
-import NavBar from "../../components/nav";
+import NavBar from "../../components/Nav";
 const JulianConverterNoSSR = dynamic(() => import("./converter"), {
 	ssr: false,
 });

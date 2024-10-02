@@ -240,7 +240,7 @@ function phaseDate(cycle: number, phase: MoonPhases) {
   const A13 = mod360(239.56 + 25.513099 * k) * toRad;
   const A14 = mod360(331.55 + 3.592518 * k) * toRad;
   let correction = 0;
-  if (phase == 0) {
+  if (phase === 0) {
     correction =
       0.00002 * Math.sin(4 * Mp) +
       -0.00002 * Math.sin(3 * Mp + M) +
@@ -267,7 +267,7 @@ function phaseDate(cycle: number, phase: MoonPhases) {
       0.01608 * Math.sin(2 * Mp) +
       0.17241 * E * Math.sin(M) +
       -0.4072 * Math.sin(Mp);
-  } else if (phase == 0.25 || phase == 0.75) {
+  } else if (phase === 0.25 || phase === 0.75) {
     correction =
       -0.00002 * Math.sin(3 * Mp + M) +
       0.00002 * Math.sin(Mp - M + 2 * F) +
@@ -307,7 +307,7 @@ function phaseDate(cycle: number, phase: MoonPhases) {
     } else {
       correction -= W;
     }
-  } else if (phase == 0.5) {
+  } else if (phase === 0.5) {
     correction =
       0.00002 * Math.sin(4 * Mp) +
       -0.00002 * Math.sin(3 * Mp + M) +
@@ -386,4 +386,70 @@ export function newMoonYear(year: number) {
 }
 
 // -------------------------------------- Moon Age -------------------------------------//
-
+function moon_age(jd: number): number {
+  // average lenght of lunar month
+  const lm: number = 1577917828.0 / 53433336.0;
+  // 2000 Jan 6 18:14 lunation number 0 jd
+  const ln0: number = 2451550.259733796;
+  // calculate the days since ln0
+  const lnDays = jd - ln0;
+  // calculate cycle lnDays / lm
+  const cycle = lnDays / lm;
+  // drop the whole number of cycle , the decimal represents the fraction of a cycle that the moon is currently in
+  // get decimalm part of cycle
+  const des: number = cycle - Math.floor(cycle);
+  // get the days from previous new moon des * lm
+  const d: number = des * lm;
+  return d;
+}
+function mmJdnow() {
+  return jdnow() + 6.5 / 24;
+}
+// get new moons data
+export function getNMs() {
+  const ct: CalendarTypes = "Gregorian";
+  const mmNow = mmJdnow();
+  const jdNow = jdnow();
+  const dt = new Date();
+  const y = dt.getUTCFullYear();
+  const rm = dt.getUTCMonth();
+  const pm = rm - 1;
+  const nm = rm + 1;
+  // recent month NMs
+  let rnms: number[] = [];
+  rnms.push(calMoonPhases(y, rm).new);
+  // prev month NMs
+  let pnms: number[] = [];
+  pnms.push(calMoonPhases(y, pm).new);
+  // next month NMs
+  let nnms: number[] = [];
+  nnms.push(calMoonPhases(y, nm).new);
+  // ------------------------------------------
+  //let p_n_m: number = 0;
+  //let n_n_m: number = 0;
+  const nm1: number | undefined = rnms.find((i) => i < jdNow);
+  const nm2: number | undefined = rnms.find((i) => i > jdNow);
+  const nm3: number = pnms.length > 1 ? pnms[1] : pnms[0];
+  const nm4: number = nnms[0];
+  const p_n_m: number = nm1 ? nm1 : nm3;
+  const n_n_m: number = nm2 ? nm2 : nm4;
+  const l_m: number = n_n_m - p_n_m;
+  const man = moon_age(mmNow);
+  const rest = l_m - man;
+  const _mp = Math.floor((rest * 100) / l_m);
+  const pnmStr = julian2dt(p_n_m, ct).string;
+  const nnmStr = julian2dt(n_n_m, ct).string;
+  return {
+    l_m,
+    man,
+    _mp,
+    p_n_m,
+    n_n_m,
+    pnmStr,
+    nnmStr,
+  };
+}
+export function moonAge() {
+  const jdNow = jdnow();
+  return moon_age(jdNow);
+}
