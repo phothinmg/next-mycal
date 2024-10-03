@@ -1,0 +1,5 @@
+{
+  "entryFiles": ["./lib/index.ts"],
+  "outDir": "app/dtlib",
+  "jsx": "react"
+}

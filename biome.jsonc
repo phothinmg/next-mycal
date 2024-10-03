@@ -24,6 +24,6 @@
   },
   "files": {
     // All tools, including the linter, ignore following files
-    "ignore": ["notes/**", "a.ts"]
+    "ignore": ["notes/**", "a.ts", "app/dtlib"]
   }
 }

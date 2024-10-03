@@ -1,6 +1,6 @@
 "use client";
-import MyMoon from "@/app";
-import type { CalendarTypes } from "@/app";
+import { MyMoon } from "@/app/dtlib";
+import type { CalendarTypes } from "@/app/dtlib";
 import Link from "next/link";
 import type React from "react";
 import { useState } from "react";

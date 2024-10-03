@@ -1,12 +1,12 @@
 "use client";
-import MyMoon from "@/app";
+import { MyMoon } from "@/app/dtlib";
 import Link from "next/link";
 import type React from "react";
 import { useEffect, useState } from "react";
 const Moon = () => {
 	const _moon = new MyMoon();
 	// set GMT+06:30
-	_moon.tz = 6.5;
+	_moon.tz = "UTC+06:30";
 	const [ma, setMaValue] = useState<number>(_moon.moonAge());
 	useEffect(() => {
 		const intervalId = setInterval(() => {

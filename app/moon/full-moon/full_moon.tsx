@@ -1,5 +1,5 @@
 "use client";
-import MyMoon from "@/app";
+import { MyMoon } from "@/app/dtlib";
 import Link from "next/link";
 import React from "react";
 import { useState } from "react";
