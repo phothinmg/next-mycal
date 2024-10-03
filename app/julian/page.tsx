@@ -1,8 +1,8 @@
+import NavBar from "@/app/components/Nav";
+import PostComponent from "@/app/components/post-component/posts";
 import type { Metadata } from "next";
 import type React from "react";
 import { memo } from "react";
-import NavBar from "../components/Nav";
-import PostComponent from "../components/post-component/posts";
 
 //
 

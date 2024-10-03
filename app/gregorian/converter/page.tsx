@@ -1,8 +1,8 @@
+import NavBar from "@/app/components/Nav";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import type React from "react";
 import { memo } from "react";
-import NavBar from "../../components/Nav";
 const GregorianConverterNoSSR = dynamic(() => import("./converter"), {
 	ssr: false,
 });

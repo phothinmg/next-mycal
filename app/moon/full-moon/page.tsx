@@ -1,16 +1,16 @@
-import React from "react";
 import dynamic from "next/dynamic";
+import type React from "react";
 
 const FullMoonNoSSR = dynamic(() => import("./full_moon"), {
-  ssr: false,
+	ssr: false,
 });
 
 const Moon: React.FC = () => {
-  return (
-    <>
-      <FullMoonNoSSR />
-    </>
-  );
+	return (
+		<>
+			<FullMoonNoSSR />
+		</>
+	);
 };
 
 export default Moon;

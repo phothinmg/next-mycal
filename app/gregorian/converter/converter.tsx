@@ -1,23 +1,33 @@
 "use client";
+import MyMoon from "@/app";
+import type { CalendarTypes } from "@/app";
+import Link from "next/link";
 import React from "react";
 import { useState } from "react";
-import { type CalendarTypes, dt2j, j2d, jdnow } from "../../index";
-import Link from "next/link";
 //
 export default function JulianConverter() {
-	const jdNow = jdnow();
-	const dtNow = j2d(jdNow);
+	const _jc = new MyMoon();
+	// const jdNow = jdnow();
+	// const dtNow = j2d(jdNow);
 	const [ct, setCtValue] = useState<CalendarTypes | string>("Gregorian");
-	const [year, setYearValue] = useState<number>(dtNow.year);
-	const [month, setMonthValue] = useState<number>(dtNow.month);
-	const [date, setDateValue] = useState<number>(dtNow.day);
-	const [hour, setHourValue] = useState<number>(dtNow.hour);
-	const [minute, setMinuteValue] = useState<number>(dtNow.minute);
-	const [second, setSecondValue] = useState<number>(dtNow.second);
+	const [year, setYearValue] = useState<number>(_jc.utcYear);
+	const [month, setMonthValue] = useState<number>(_jc.utcMonth);
+	const [date, setDateValue] = useState<number>(_jc.utcDate);
+	const [hour, setHourValue] = useState<number>(_jc.utcHour);
+	const [minute, setMinuteValue] = useState<number>(_jc.utcMinute);
+	const [second, setSecondValue] = useState<number>(_jc.utcSecond);
 	const julian: {
 		jd: number;
 		jdn: number;
-	} = dt2j(year, month, date, hour, minute, second, ct as CalendarTypes);
+	} = MyMoon.dateTime2Julian(
+		year,
+		month,
+		date,
+		hour,
+		minute,
+		second,
+		ct as CalendarTypes,
+	);
 	const jd: number = julian.jd;
 	const jdn: number = julian.jdn;
 	//
