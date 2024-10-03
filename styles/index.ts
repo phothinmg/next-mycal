@@ -8,11 +8,11 @@ files.map((i) => {
   contents.push(fs.readFileSync(i, "utf8"));
 });
 const cc: string = contents.join("\n");
-if (fs.existsSync("./src/globals.css")) {
-  fs.unlinkSync("./src/globals.css");
+if (fs.existsSync("./app/globals.css")) {
+  fs.unlinkSync("./app/globals.css");
 }
-if (fs.existsSync("./src/globals.css.map")) {
-  fs.unlinkSync("./src/globals.css.map");
+if (fs.existsSync("./app/globals.css.map")) {
+  fs.unlinkSync("./app/globals.css.map");
 }
 transformContent({
   content: cc,

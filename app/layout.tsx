@@ -36,10 +36,6 @@ export default function RootLayout({
 					id="math-jax"
 					src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 				/>
-				<Script
-					id="theme-btn"
-					src="https://cdn.jsdelivr.net/gh/phothinmg/master-repo@main/honoblog/theme-button.min.js"
-				/>
 			</body>
 		</html>
 	);
